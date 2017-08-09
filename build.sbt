@@ -1,5 +1,7 @@
 import sbtrelease.ReleaseStateTransformations._
 
+organization := "com.github.xuwei-k"
+
 name := "sbt-jshell"
 
 sbtPlugin := true
