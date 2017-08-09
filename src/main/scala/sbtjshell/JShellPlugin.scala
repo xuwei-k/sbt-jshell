@@ -18,7 +18,7 @@ object JShellPlugin extends AutoPlugin {
   def findJShell(): Tool = {
     val loader = ServiceLoader.load(classOf[Tool])
     val tools = loader.iterator.asScala.toList
-    tools.find(_.name() == "jshell").getOrElse(sys.error("could not fould jshell " + tools))
+    tools.find(_.name() == "jshell").getOrElse(sys.error("could not found jshell " + tools))
   }
 
   def runJShell(args: Seq[String]): Int = {
