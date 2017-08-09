@@ -1,0 +1,16 @@
+language: scala
+sudo: false
+script:
+- sbt test
+before_install:
+- cd ~
+- JDK9_URL=`curl http://jdk.java.net/9/ | grep "lin64JDK" | grep "tar.gz\"" | sed -e "s/\"/ /g" | awk '{print $5}'`
+- wget -O jdk-9_linux-x64_bin.tar.gz $JDK9_URL
+- tar -xzf jdk-9_linux-x64_bin.tar.gz
+- cd -
+- export JAVA_HOME=~/jdk-9
+- PATH=$JAVA_HOME/bin:$PATH
+script:
+- java -version
+- wget https://raw.githubusercontent.com/paulp/sbt-extras/7e0418fa6520623f17941061f3ab07f7b2ef4f8f/sbt && chmod +x ./sbt
+- ./sbt test
