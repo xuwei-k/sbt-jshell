@@ -26,14 +26,19 @@ object JShellPlugin extends AutoPlugin {
   }
 
   override val projectSettings: Seq[Def.Setting[_]] = Seq[Def.SettingsDefinition](
-    Seq(Compile, Test).map { c =>
-      (jshell in c) := {
-        val args = spaceDelimited("<arg>").parsed.toList
-        val path = (fullClasspath in c).value
-          .collect{ case x if x.data.exists => x.data.getCanonicalPath }
-          .mkString(System.getProperty("path.separator"))
-        runJShell(Seq("--class-path", path) ++ args)
-      }
+    Seq(Compile, Test).flatMap { c =>
+      Seq[Def.SettingsDefinition](
+        fullClasspath in (c, jshell) := {
+          (fullClasspath in c).value.filter(_.data.exists)
+        },
+        (jshell in c) := {
+          val args = spaceDelimited("<arg>").parsed.toList
+          val path = (fullClasspath in (c, jshell)).value
+            .map(_.data.getCanonicalPath)
+            .mkString(System.getProperty("path.separator"))
+          runJShell(Seq("--class-path", path) ++ args)
+        }
+      ).flatMap(_.flatten)
     }
   ).flatMap(_.flatten)
 
