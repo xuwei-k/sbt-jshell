@@ -3,6 +3,7 @@ package sbtjshell
 import javax.tools.Tool
 import java.util.ServiceLoader
 import sbt._
+import sbt.io.IO
 import sbt.Keys._
 import sbt.complete.DefaultParsers._
 import scala.collection.JavaConverters._
@@ -36,7 +37,17 @@ object JShellPlugin extends AutoPlugin {
           val path = (fullClasspath in (c, jshell)).value
             .map(_.data.getCanonicalPath)
             .mkString(System.getProperty("path.separator"))
-          runJShell(Seq("--class-path", path) ++ args)
+
+          IO.withTemporaryFile("jshell-startup", ".jsh"){ temp =>
+            val startup = (initialCommands in (c, jshell)).?.value match {
+              case Some(s) if s.trim.nonEmpty =>
+                IO.write(temp, s)
+                Seq("--startup", temp.getCanonicalPath)
+              case _ =>
+                Nil
+            }
+            runJShell(Seq("--class-path", path) ++ startup ++ args)
+          }
         }
       ).flatMap(_.flatten)
     }
