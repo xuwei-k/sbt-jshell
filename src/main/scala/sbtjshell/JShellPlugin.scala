@@ -10,7 +10,7 @@ import scala.collection.JavaConverters._
 object JShellPlugin extends AutoPlugin {
 
   object autoImport {
-    val jshell = inputKey[Unit]("invoke jshell")
+    val jshell = inputKey[Int]("invoke jshell")
   }
 
   import autoImport._
