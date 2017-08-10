@@ -51,36 +51,30 @@ licenses := Seq("MIT" -> url("http://opensource.org/licenses/MIT"))
 
 releaseTagName := tagName.value
 
-val updateReadme: State => State = { state: State =>
+val updateReadme = TaskKey[Int]("updateReadme")
+
+updateReadme := {
   val sonatypeURL = "https://oss.sonatype.org/service/local/repositories/"
-  val extracted = Project.extract(state)
-  val scalaV = extracted get scalaBinaryVersion
-  val sbtV = extracted get sbtBinaryVersion
-  val v = extracted get version
-  val org = extracted get organization
-  val n = extracted get name
-  val snapshotOrRelease = if(extracted get isSnapshot) "snapshots" else "releases"
+  val v = version.value
+  val org = organization.value
+  val n = name.value
+  val snapshotOrRelease = if(isSnapshot.value) "snapshots" else "releases"
   val readme = "README.md"
   val readmeFile = file(readme)
-  val newReadme = Predef.augmentString(IO.read(readmeFile)).lines.map{ line =>
+  val newReadme = IO.read(readmeFile).lines.map{ line =>
     val matchReleaseOrSnapshot = line.contains("SNAPSHOT") == v.contains("SNAPSHOT")
     if(line.startsWith("addSbtPlugin") && matchReleaseOrSnapshot){
       s"""addSbtPlugin("${org}" % "${n}" % "$v")"""
     }else if(line.contains(sonatypeURL) && matchReleaseOrSnapshot){
-      s"- [API Documentation](${sonatypeURL}${snapshotOrRelease}/archive/${org.replace('.','/')}/${n}_${scalaV}_${sbtV}/${v}/${n}-${v}-javadoc.jar/!/sbtjshell/index.html)"
+      s"- [API Documentation](${sonatypeURL}${snapshotOrRelease}/archive/${org.replace('.','/')}/${n}_${scalaBinaryVersion.value}_${sbtBinaryVersion.value}/${v}/${n}-${v}-javadoc.jar/!/sbtjshell/index.html)"
     }else line
   }.mkString("", "\n", "\n")
   IO.write(readmeFile, newReadme)
-  val git = new sbtrelease.Git(extracted get baseDirectory)
-  git.add(readme) ! state.log
-  git.commit(message = "update " + readme, sign = false) ! state.log
+  val git = new sbtrelease.Git(baseDirectory.value)
+  git.add(readme) ! streams.value.log
+  git.commit(message = "update " + readme, sign = false) ! streams.value.log
   sys.process.Process(Seq("git", "diff", "HEAD^")).!
-  state
 }
-
-commands += Command.command("updateReadme")(updateReadme)
-
-val updateReadmeProcess: ReleaseStep = updateReadme
 
 releaseProcess := Seq[ReleaseStep](
   checkSnapshotDependencies,
@@ -89,13 +83,13 @@ releaseProcess := Seq[ReleaseStep](
   runTest,
   setReleaseVersion,
   commitReleaseVersion,
-  updateReadmeProcess,
+  releaseStepTask(updateReadme),
   tagRelease,
   releaseStepCommand("publishSigned"),
   setNextVersion,
   commitNextVersion,
   releaseStepCommand("sonatypeReleaseAll"),
-  updateReadmeProcess,
+  releaseStepTask(updateReadme),
   pushChanges,
 )
 
