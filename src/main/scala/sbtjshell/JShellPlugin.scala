@@ -38,7 +38,7 @@ object JShellPlugin extends AutoPlugin {
             .map(_.data.getCanonicalPath)
             .mkString(System.getProperty("path.separator"))
 
-          IO.withTemporaryFile("jshell-startup", ".jsh"){ temp =>
+          IO.withTemporaryFile("jshell-startup", ".jsh") { temp =>
             val startup = (initialCommands in (c, jshell)).?.value match {
               case Some(s) if s.trim.nonEmpty =>
                 IO.write(temp, s)
