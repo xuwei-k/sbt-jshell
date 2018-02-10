@@ -3,7 +3,6 @@ package sbtjshell
 import javax.tools.Tool
 import java.util.ServiceLoader
 import sbt._
-import sbt.io.IO
 import sbt.Keys._
 import sbt.complete.DefaultParsers._
 import scala.collection.JavaConverters._

@@ -6,6 +6,8 @@ name := "sbt-jshell"
 
 sbtPlugin := true
 
+crossSbtVersions += "0.13.17"
+
 scalacOptions ++= (
   "-deprecation" ::
   "-unchecked" ::
@@ -91,7 +93,7 @@ releaseProcess := Seq[ReleaseStep](
   commitReleaseVersion,
   updateReadmeProcess,
   tagRelease,
-  releaseStepCommand("publishSigned"),
+  releaseStepCommandAndRemaining("^ publishSigned"),
   setNextVersion,
   commitNextVersion,
   releaseStepCommand("sonatypeReleaseAll"),

@@ -3,4 +3,4 @@ sudo: false
 jdk: oraclejdk9
 script:
 - java -version
-- sbt scalafmt::test test
+- sbt scalafmt::test "^ test"
