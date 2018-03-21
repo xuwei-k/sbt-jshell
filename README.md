@@ -6,7 +6,7 @@
 
 ### requirement
 - sbt 1.x or 0.13.17
-- Java 9
+- Java 9 or higher
 
 ### setup
 
