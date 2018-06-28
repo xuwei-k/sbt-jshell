@@ -1,6 +1,8 @@
 language: scala
 sudo: false
-jdk: oraclejdk9
+jdk:
+- oraclejdk9
+- oraclejdk10
 script:
 - java -version
 - sbt scalafmt::test "^ test"
