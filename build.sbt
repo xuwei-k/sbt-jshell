@@ -8,13 +8,12 @@ sbtPlugin := true
 
 crossSbtVersions += "0.13.17"
 
-scalacOptions ++= (
-  "-deprecation" ::
-  "-unchecked" ::
-  "-language:existentials" ::
-  "-language:higherKinds" ::
-  "-language:implicitConversions" ::
-  Nil
+scalacOptions ++= Seq(
+  "-deprecation",
+  "-unchecked",
+  "-language:existentials",
+  "-language:higherKinds",
+  "-language:implicitConversions"
 )
 
 val tagName = Def.setting {
@@ -28,25 +27,27 @@ val tagOrHash = Def.setting {
 
 scalacOptions in (Compile, doc) ++= {
   Seq(
-    "-sourcepath", baseDirectory.value.getAbsolutePath,
-    "-doc-source-url", s"https://github.com/xuwei-k/sbt-jshell/tree/${tagOrHash.value}€{FILE_PATH}.scala"
+    "-sourcepath",
+    baseDirectory.value.getAbsolutePath,
+    "-doc-source-url",
+    s"https://github.com/xuwei-k/sbt-jshell/tree/${tagOrHash.value}€{FILE_PATH}.scala"
   )
 }
 
 pomExtra := (
-<url>https://github.com/xuwei-k/sbt-jshell</url>
-<developers>
-  <developer>
-    <id>xuwei-k</id>
-    <name>Kenji Yoshida</name>
-    <url>https://github.com/xuwei-k</url>
-  </developer>
-</developers>
-<scm>
-  <url>git@github.com:xuwei-k/sbt-jshell.git</url>
-  <connection>scm:git:git@github.com:xuwei-k/sbt-jshell.git</connection>
-  <tag>{tagOrHash.value}</tag>
-</scm>
+  <url>https://github.com/xuwei-k/sbt-jshell</url>
+  <developers>
+    <developer>
+      <id>xuwei-k</id>
+      <name>Kenji Yoshida</name>
+      <url>https://github.com/xuwei-k</url>
+    </developer>
+  </developers>
+  <scm>
+    <url>git@github.com:xuwei-k/sbt-jshell.git</url>
+    <connection>scm:git:git@github.com:xuwei-k/sbt-jshell.git</connection>
+    <tag>{tagOrHash.value}</tag>
+  </scm>
 )
 
 licenses := Seq("MIT" -> url("http://opensource.org/licenses/MIT"))
@@ -61,17 +62,21 @@ val updateReadme: State => State = { state: State =>
   val v = extracted get version
   val org = extracted get organization
   val n = extracted get name
-  val snapshotOrRelease = if(extracted get isSnapshot) "snapshots" else "releases"
+  val snapshotOrRelease = if (extracted get isSnapshot) "snapshots" else "releases"
   val readme = "README.md"
   val readmeFile = file(readme)
-  val newReadme = Predef.augmentString(IO.read(readmeFile)).lines.map{ line =>
-    val matchReleaseOrSnapshot = line.contains("SNAPSHOT") == v.contains("SNAPSHOT")
-    if(line.startsWith("addSbtPlugin") && matchReleaseOrSnapshot){
-      s"""addSbtPlugin("${org}" % "${n}" % "$v")"""
-    }else if(line.contains(sonatypeURL) && matchReleaseOrSnapshot){
-      s"- [API Documentation](${sonatypeURL}${snapshotOrRelease}/archive/${org.replace('.','/')}/${n}_${scalaV}_${sbtV}/${v}/${n}-${v}-javadoc.jar/!/sbtjshell/index.html)"
-    }else line
-  }.mkString("", "\n", "\n")
+  val newReadme = Predef
+    .augmentString(IO.read(readmeFile))
+    .lines
+    .map { line =>
+      val matchReleaseOrSnapshot = line.contains("SNAPSHOT") == v.contains("SNAPSHOT")
+      if (line.startsWith("addSbtPlugin") && matchReleaseOrSnapshot) {
+        s"""addSbtPlugin("${org}" % "${n}" % "$v")"""
+      } else if (line.contains(sonatypeURL) && matchReleaseOrSnapshot) {
+        s"- [API Documentation](${sonatypeURL}${snapshotOrRelease}/archive/${org.replace('.', '/')}/${n}_${scalaV}_${sbtV}/${v}/${n}-${v}-javadoc.jar/!/sbtjshell/index.html)"
+      } else line
+    }
+    .mkString("", "\n", "\n")
   IO.write(readmeFile, newReadme)
   val git = new sbtrelease.Git(extracted get baseDirectory)
   git.add(readme) ! state.log

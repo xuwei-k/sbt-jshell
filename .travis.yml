@@ -5,4 +5,4 @@ jdk:
 - oraclejdk10
 script:
 - java -version
-- sbt scalafmt::test "^ test"
+- sbt scalafmtCheck test:scalafmtCheck scalafmtSbtCheck "^ test"
