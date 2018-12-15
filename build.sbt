@@ -6,7 +6,7 @@ name := "sbt-jshell"
 
 sbtPlugin := true
 
-crossSbtVersions += "0.13.17"
+crossSbtVersions += "0.13.18"
 
 scalacOptions ++= Seq(
   "-deprecation",
