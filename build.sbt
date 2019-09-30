@@ -1,12 +1,18 @@
 import sbtrelease.ReleaseStateTransformations._
 
+ThisBuild / useSuperShell := false
+
+ThisBuild / onChangedBuildSource := IgnoreSourceChanges
+
 organization := "com.github.xuwei-k"
 
 name := "sbt-jshell"
 
 sbtPlugin := true
 
-crossSbtVersions += "0.13.18"
+// Don't update to sbt 1.3.x
+// https://github.com/sbt/sbt/issues/5049
+crossSbtVersions := Seq("0.13.18", "1.2.8")
 
 scalacOptions ++= Seq(
   "-deprecation",
