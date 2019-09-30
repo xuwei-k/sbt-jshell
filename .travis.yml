@@ -1,7 +1,8 @@
 language: scala
 sudo: false
+dist: bionic
 jdk:
-- oraclejdk9
+- openjdk9
 - openjdk11
 script:
 - java -version
