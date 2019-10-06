@@ -25,9 +25,9 @@ object JShellPlugin extends AutoPlugin {
     findJShell().run(null, null, null, args: _*)
   }
 
-  override val projectSettings: Seq[Def.Setting[_]] = Seq[Def.SettingsDefinition](
+  override val projectSettings: Seq[Def.Setting[_]] = Def.settings(
     Seq(Compile, Test).flatMap { c =>
-      Seq[Def.SettingsDefinition](
+      Def.settings(
         fullClasspath in (c, jshell) := {
           (fullClasspath in c).value.filter(_.data.exists)
         },
@@ -50,8 +50,8 @@ object JShellPlugin extends AutoPlugin {
             }
           }
         }
-      ).flatMap(_.flatten)
+      )
     }
-  ).flatMap(_.flatten)
+  )
 
 }
