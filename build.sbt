@@ -1,7 +1,5 @@
 import sbtrelease.ReleaseStateTransformations._
 
-ThisBuild / useSuperShell := false
-
 ThisBuild / onChangedBuildSource := IgnoreSourceChanges
 
 organization := "com.github.xuwei-k"
