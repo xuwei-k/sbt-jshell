@@ -103,18 +103,13 @@ releaseProcess := Seq[ReleaseStep](
   updateReadmeProcess,
   tagRelease,
   releaseStepCommandAndRemaining("^ publishSigned"),
+  releaseStepCommand("sonatypeBundleRelease"),
   setNextVersion,
   commitNextVersion,
-  releaseStepCommand("sonatypeReleaseAll"),
   updateReadmeProcess,
   pushChanges,
 )
 
-publishTo := Some(
-  if (isSnapshot.value)
-    Opts.resolver.sonatypeSnapshots
-  else
-    Opts.resolver.sonatypeStaging
-)
+publishTo := sonatypePublishToBundle.value
 
 enablePlugins(JShellPlugin)
