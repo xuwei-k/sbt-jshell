@@ -20,7 +20,5 @@ build.sbt
 
 ```scala
 enablePlugins(JShellPlugin)
-
-// if sbt 1.3.0 or higher
-ThisBuild / useSuperShell := false
 ```
+
