@@ -45,7 +45,9 @@ object JShellPlugin extends AutoPlugin {
               case _ =>
                 Nil
             }
-            runJShell(Seq("--class-path", path) ++ startup ++ args)
+            System.out.synchronized {
+              runJShell(Seq("--class-path", path) ++ startup ++ args)
+            }
           }
         }
       ).flatMap(_.flatten)
