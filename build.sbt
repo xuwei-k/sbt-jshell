@@ -1,6 +1,6 @@
 import sbtrelease.ReleaseStateTransformations._
 
-ThisBuild / onChangedBuildSource := IgnoreSourceChanges
+ThisBuild / onChangedBuildSource := ReloadOnSourceChanges
 
 organization := "com.github.xuwei-k"
 
