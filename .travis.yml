@@ -1,9 +1,0 @@
-language: scala
-sudo: false
-dist: bionic
-jdk:
-- openjdk9
-- openjdk11
-script:
-- java -version
-- sbt scalafmtCheck test:scalafmtCheck scalafmtSbtCheck "^ test"
