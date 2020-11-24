@@ -2,7 +2,7 @@ name: scala-steward
 on:
   push:
   schedule:
-  - cron: '0 0 * * *'
+  - cron: '0 4 * * *'
 jobs:
   scala-steward:
     runs-on: ubuntu-latest
@@ -10,10 +10,17 @@ jobs:
     - uses: actions/setup-java@v1.4.3
       with:
         java-version: 9
-    - uses: laughedelic/coursier-setup@v1
-    - run: cs install scalafmt
-    - name: Launch Scala Steward
+    - name: Generate token
+      id: generate_token
       if: ${{ !github.event.repository.fork }}
-      uses: scala-steward-org/scala-steward-action@v2.9.1
+      uses: tibdex/github-app-token@v1
       with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+        app_id: 89536
+        private_key: ${{ secrets.XUWEI_K_BOT_KEY }}
+    - name: Launch Scala Steward
+      uses: scala-steward-org/scala-steward-action@v2.9.1
+      if: ${{ !github.event.repository.fork }}
+      with:
+        github-token: ${{ steps.generate_token.outputs.token }}
+        author-email: "74788111+xuwei-k-bot[bot]@users.noreply.github.com"
+        author-name: xuwei-k-bot[bot]
