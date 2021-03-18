@@ -21,7 +21,7 @@ scalacOptions ++= Seq(
 )
 
 val tagName = Def.setting {
-  s"v${if (releaseUseGlobalVersion.value) (version in ThisBuild).value else version.value}"
+  s"v${if (releaseUseGlobalVersion.value) (ThisBuild / version).value else version.value}"
 }
 
 val tagOrHash = Def.setting {
@@ -29,7 +29,7 @@ val tagOrHash = Def.setting {
   else tagName.value
 }
 
-scalacOptions in (Compile, doc) ++= {
+(Compile / doc / scalacOptions) ++= {
   Seq(
     "-sourcepath",
     baseDirectory.value.getAbsolutePath,
