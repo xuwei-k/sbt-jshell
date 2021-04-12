@@ -9,6 +9,7 @@ jobs:
     steps:
     - uses: actions/setup-java@v2
       with:
+        distribution: adopt
         java-version: 9
     - name: Generate token
       id: generate_token
