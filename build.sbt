@@ -10,7 +10,7 @@ sbtPlugin := true
 
 // Don't update to sbt 1.3.x
 // https://github.com/sbt/sbt/issues/5049
-crossSbtVersions := Seq("0.13.18", "1.2.8")
+crossSbtVersions := Seq("1.2.8")
 
 scalacOptions ++= Seq(
   "-deprecation",
