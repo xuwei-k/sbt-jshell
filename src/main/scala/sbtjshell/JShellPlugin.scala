@@ -25,6 +25,8 @@ object JShellPlugin extends AutoPlugin {
     findJShell().run(null, null, null, args: _*)
   }
 
+  System.setProperty("sbt.supershell", "false")
+
   override val projectSettings: Seq[Def.Setting[_]] = Def.settings(
     Seq(Compile, Test).flatMap { c =>
       Def.settings(
