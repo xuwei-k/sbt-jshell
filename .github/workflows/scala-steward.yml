@@ -11,7 +11,7 @@ jobs:
     - uses: actions/setup-java@v2
       with:
         distribution: adopt
-        java-version: 9
+        java-version: 11
     - name: Generate token
       id: generate_token
       if: ${{ !github.event.repository.fork }}
