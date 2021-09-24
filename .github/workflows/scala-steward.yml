@@ -26,4 +26,3 @@ jobs:
         github-token: ${{ steps.generate_token.outputs.token }}
         author-email: "74788111+xuwei-k-bot[bot]@users.noreply.github.com"
         author-name: xuwei-k-bot[bot]
-        scala-steward-version: 0.10.0
