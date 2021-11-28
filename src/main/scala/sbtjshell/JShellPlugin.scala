@@ -21,13 +21,22 @@ object JShellPlugin extends AutoPlugin {
     tools.find(_.name() == "jshell").getOrElse(sys.error("could not found jshell " + tools))
   }
 
-  def runJShell(args: Seq[String]): Int = {
-    findJShell().run(null, null, null, args: _*)
+  def runJShell(args: Seq[String], fork: Boolean, forkOptions: ForkOptions): Int = {
+    if (fork) {
+      val x = new sbt.Fork("java", Some("jdk.internal.jshell.tool.JShellToolProvider"))
+      x.apply(forkOptions.withConnectInput(true).withRunJVMOptions(args.toVector), args)
+    } else {
+      val jshellTool = findJShell()
+      System.out.synchronized {
+        jshellTool.run(null, null, null, args: _*)
+      }
+    }
   }
 
   System.setProperty("sbt.supershell", "false")
 
   override val projectSettings: Seq[Def.Setting[_]] = Def.settings(
+    jshell / fork := true,
     Seq(Compile, Test).flatMap { c =>
       Def.settings(
         (c / jshell / fullClasspath) := {
@@ -48,7 +57,11 @@ object JShellPlugin extends AutoPlugin {
                 Nil
             }
             System.out.synchronized {
-              runJShell(Seq("--class-path", path) ++ startup ++ args)
+              runJShell(
+                args = Seq("--class-path", path) ++ startup ++ args,
+                fork = (c / jshell / fork).value,
+                forkOptions = (c / jshell / forkOptions).value,
+              )
             }
           }
         }
