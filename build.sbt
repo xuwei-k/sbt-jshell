@@ -8,7 +8,9 @@ name := "sbt-jshell"
 
 sbtPlugin := true
 
-sbtPluginPublishLegacyMavenStyle := false
+sbtPluginPublishLegacyMavenStyle := {
+  sys.env.isDefinedAt("GITHUB_ACTION") || isSnapshot.value
+}
 
 scalacOptions ++= Seq(
   "-deprecation",
