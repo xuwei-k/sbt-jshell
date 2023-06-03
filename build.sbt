@@ -8,6 +8,8 @@ name := "sbt-jshell"
 
 sbtPlugin := true
 
+sbtPluginPublishLegacyMavenStyle := false
+
 scalacOptions ++= Seq(
   "-deprecation",
   "-unchecked",
