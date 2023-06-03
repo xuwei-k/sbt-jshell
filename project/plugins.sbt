@@ -1,4 +1,4 @@
-unmanagedSourceDirectories in Compile += baseDirectory.value.getParentFile / "src" / "main" / "scala"
+Compile / unmanagedSourceDirectories += baseDirectory.value.getParentFile / "src" / "main" / "scala"
 
 scalacOptions ++= Seq(
   "-deprecation",
