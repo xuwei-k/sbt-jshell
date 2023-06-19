@@ -20,7 +20,7 @@ jobs:
         app_id: 89536
         private_key: ${{ secrets.XUWEI_K_BOT_KEY }}
     - name: Launch Scala Steward
-      uses: scala-steward-org/scala-steward-action@v2.54.0
+      uses: scala-steward-org/scala-steward-action@v2.56.0
       with:
         github-token: ${{ steps.generate_token.outputs.token }}
         author-email: "74788111+xuwei-k-bot[bot]@users.noreply.github.com"
