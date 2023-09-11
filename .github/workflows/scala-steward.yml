@@ -15,7 +15,7 @@ jobs:
         java-version: 11
     - name: Generate token
       id: generate_token
-      uses: tibdex/github-app-token@v1
+      uses: tibdex/github-app-token@v2
       with:
         app_id: 89536
         private_key: ${{ secrets.XUWEI_K_BOT_KEY }}
