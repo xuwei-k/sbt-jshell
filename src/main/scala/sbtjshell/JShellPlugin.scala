@@ -47,9 +47,7 @@ object JShellPlugin extends AutoPlugin {
               case _ =>
                 Nil
             }
-            System.out.synchronized {
-              runJShell(Seq("--class-path", path) ++ startup ++ args)
-            }
+            runJShell(Seq("--class-path", path) ++ startup ++ args)
           }
         }
       )
