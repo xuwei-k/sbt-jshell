@@ -8,6 +8,17 @@ name := "sbt-jshell"
 
 sbtPlugin := true
 
+crossScalaVersions += "3.3.4"
+
+pluginCrossBuild / sbtVersion := {
+  scalaBinaryVersion.value match {
+    case "2.12" =>
+      sbtVersion.value
+    case _ =>
+      "2.0.0-M2"
+  }
+}
+
 sbtPluginPublishLegacyMavenStyle := {
   sys.env.isDefinedAt("GITHUB_ACTION") || isSnapshot.value
 }
@@ -103,9 +114,9 @@ releaseProcess := Seq[ReleaseStep](
   updateReadmeProcess,
   tagRelease,
   releaseStepCommandAndRemaining("set ThisBuild / useSuperShell := false"),
-  releaseStepCommandAndRemaining("^ publishSigned"),
+  releaseStepCommandAndRemaining("+ publishSigned"),
   releaseStepCommandAndRemaining("set ThisBuild / useSuperShell := true"),
-  releaseStepCommand("sonatypeBundleRelease"),
+  releaseStepCommandAndRemaining("sonatypeBundleRelease"),
   setNextVersion,
   commitNextVersion,
   updateReadmeProcess,

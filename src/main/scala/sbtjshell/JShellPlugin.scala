@@ -2,12 +2,14 @@ package sbtjshell
 
 import javax.tools.Tool
 import java.util.ServiceLoader
-import sbt._
+// format: off
+import sbt.{given, *}
+// format: on
 import sbt.Keys._
 import sbt.complete.DefaultParsers._
 import scala.collection.JavaConverters._
 
-object JShellPlugin extends AutoPlugin {
+object JShellPlugin extends AutoPlugin with JShellCompat {
 
   object autoImport {
     val jshell = inputKey[Int]("invoke jshell")
@@ -30,14 +32,10 @@ object JShellPlugin extends AutoPlugin {
   override val projectSettings: Seq[Def.Setting[_]] = Def.settings(
     Seq(Compile, Test).flatMap { c =>
       Def.settings(
-        (c / jshell / fullClasspath) := {
-          (c / fullClasspath).value.filter(_.data.exists)
-        },
+        jshellFullClasspath(c),
         (c / jshell) := {
           val args = spaceDelimited("<arg>").parsed.toList
-          val path = (c / jshell / fullClasspath).value
-            .map(_.data.getCanonicalPath)
-            .mkString(System.getProperty("path.separator"))
+          val path = jshellFullClasspathValue(c).value.map(_.getCanonicalPath).mkString(java.io.File.pathSeparator)
 
           IO.withTemporaryFile("jshell-startup", ".jsh") { temp =>
             val startup = (c / jshell / initialCommands).?.value match {
