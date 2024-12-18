@@ -1,6 +1,6 @@
 package sbtjshell
 
-import sbt.{Configuration, Def, Task, given}
+import sbt.*
 import sbt.Keys.fullClasspath
 import sbt.Keys.fileConverter
 import java.io.File
