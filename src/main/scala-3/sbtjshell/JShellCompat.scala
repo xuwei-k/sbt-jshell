@@ -8,7 +8,7 @@ import java.io.File
 private[sbtjshell] trait JShellCompat { self: JShellPlugin.type =>
 
   def jshellFullClasspath(c: Configuration): Def.Setting[?] = {
-    (c / autoImport.jshell / fullClasspath) := {
+    (c / autoImport.jshell / fullClasspath) := Def.uncached {
       val converter = fileConverter.value
       (c / fullClasspath).value.filter(x => converter.toPath(x.data).toFile.exists)
     }
