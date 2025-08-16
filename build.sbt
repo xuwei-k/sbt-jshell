@@ -116,13 +116,13 @@ releaseProcess := Seq[ReleaseStep](
   releaseStepCommandAndRemaining("set ThisBuild / useSuperShell := false"),
   releaseStepCommandAndRemaining("+ publishSigned"),
   releaseStepCommandAndRemaining("set ThisBuild / useSuperShell := true"),
-  releaseStepCommandAndRemaining("sonatypeBundleRelease"),
+  releaseStepCommandAndRemaining("sonaRelease"),
   setNextVersion,
   commitNextVersion,
   updateReadmeProcess,
   pushChanges,
 )
 
-publishTo := sonatypePublishToBundle.value
+publishTo := (if (isSnapshot.value) None else localStaging.value)
 
 enablePlugins(JShellPlugin)
