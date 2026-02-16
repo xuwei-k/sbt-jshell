@@ -1,6 +1,6 @@
 # sbt jshell plugin
 
-- [API Documentation](https://oss.sonatype.org/service/local/repositories/releases/archive/com/github/xuwei-k/sbt-jshell_2.12_1.0/0.1.5/sbt-jshell-0.1.5-javadoc.jar/!/sbtjshell/index.html)
+[![scaladoc](https://javadoc.io/badge2/com.github.xuwei-k/sbt-jshell_sbt2_3/javadoc.svg)](https://javadoc.io/doc/com.github.xuwei-k/sbt-jshell_sbt2_3)
 
 ### requirement
 - Java 9 or higher
