@@ -35,7 +35,7 @@ object JShellPlugin extends AutoPlugin with JShellCompat {
         jshellFullClasspath(c),
         (c / jshell) := {
           val args = spaceDelimited("<arg>").parsed.toList
-          val path = jshellFullClasspathValue(c).value.map(_.getCanonicalPath).mkString(java.io.File.pathSeparator)
+          val path = jshellFullClasspathValue(c).value.map(_.getAbsolutePath).mkString(java.io.File.pathSeparator)
 
           IO.withTemporaryFile("jshell-startup", ".jsh") { temp =>
             val startup = (c / jshell / initialCommands).?.value match {
