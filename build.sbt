@@ -70,14 +70,10 @@ licenses := Seq("MIT" -> url("http://opensource.org/licenses/MIT"))
 releaseTagName := tagName.value
 
 val updateReadme: State => State = { state =>
-  val sonatypeURL = "https://oss.sonatype.org/service/local/repositories/"
   val extracted = Project.extract(state)
-  val scalaV = extracted get scalaBinaryVersion
-  val sbtV = extracted get sbtBinaryVersion
   val v = extracted get version
   val org = extracted get organization
   val n = extracted get name
-  val snapshotOrRelease = if (extracted get isSnapshot) "snapshots" else "releases"
   val readme = "README.md"
   val readmeFile = file(readme)
   val newReadme = Predef
@@ -87,8 +83,6 @@ val updateReadme: State => State = { state =>
       val matchReleaseOrSnapshot = line.contains("SNAPSHOT") == v.contains("SNAPSHOT")
       if (line.startsWith("addSbtPlugin") && matchReleaseOrSnapshot) {
         s"""addSbtPlugin("${org}" % "${n}" % "$v")"""
-      } else if (line.contains(sonatypeURL) && matchReleaseOrSnapshot) {
-        s"- [API Documentation](${sonatypeURL}${snapshotOrRelease}/archive/${org.replace('.', '/')}/${n}_${scalaV}_${sbtV}/${v}/${n}-${v}-javadoc.jar/!/sbtjshell/index.html)"
       } else line
     }
     .mkString("", "\n", "\n")
