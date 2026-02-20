@@ -1,6 +1,6 @@
 import sbtrelease.ReleaseStateTransformations._
 
-def sbt2 = "2.0.0-RC12"
+def sbt1 = "1.12.10"
 
 ThisBuild / onChangedBuildSource := ReloadOnSourceChanges
 
@@ -10,14 +10,14 @@ name := "sbt-jshell"
 
 sbtPlugin := true
 
-crossScalaVersions += scala_version_from_sbt_version.ScalaVersionFromSbtVersion(sbt2)
+crossScalaVersions += scala_version_from_sbt_version.ScalaVersionFromSbtVersion(sbt1)
 
 pluginCrossBuild / sbtVersion := {
   scalaBinaryVersion.value match {
     case "2.12" =>
-      sbtVersion.value
+      sbt1
     case _ =>
-      sbt2
+      sbtVersion.value
   }
 }
 
@@ -34,7 +34,7 @@ val tagName = Def.setting {
 }
 
 val tagOrHash = Def.setting {
-  if (isSnapshot.value) sys.process.Process("git rev-parse HEAD").lineStream_!.head
+  if (isSnapshot.value) sys.process.Process("git rev-parse HEAD").lazyLines_!.head
   else tagName.value
 }
 
@@ -74,9 +74,9 @@ val updateReadme: State => State = { state =>
   val n = extracted get name
   val readme = "README.md"
   val readmeFile = file(readme)
-  val newReadme = Predef
-    .augmentString(IO.read(readmeFile))
-    .lines
+  val newReadme = IO
+    .read(readmeFile)
+    .linesIterator
     .map { line =>
       val matchReleaseOrSnapshot = line.contains("SNAPSHOT") == v.contains("SNAPSHOT")
       if (line.startsWith("addSbtPlugin") && matchReleaseOrSnapshot) {

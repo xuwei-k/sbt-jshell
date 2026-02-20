@@ -1,11 +1,10 @@
 Compile / unmanagedSourceDirectories += baseDirectory.value.getParentFile / "src" / "main" / "scala"
-Compile / unmanagedSourceDirectories += baseDirectory.value.getParentFile / "src" / "main" / "scala-2"
+Compile / unmanagedSourceDirectories += baseDirectory.value.getParentFile / "src" / "main" / "scala-3"
 
 scalacOptions ++= Seq(
   "-deprecation",
   "-unchecked",
   "-language:existentials",
-  "-language:higherKinds",
   "-language:implicitConversions"
 )
 
