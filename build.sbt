@@ -69,7 +69,7 @@ licenses := Seq("MIT" -> url("http://opensource.org/licenses/MIT"))
 
 releaseTagName := tagName.value
 
-val updateReadme: State => State = { state: State =>
+val updateReadme: State => State = { state =>
   val sonatypeURL = "https://oss.sonatype.org/service/local/repositories/"
   val extracted = Project.extract(state)
   val scalaV = extracted get scalaBinaryVersion
