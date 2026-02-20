@@ -29,7 +29,7 @@ object JShellPlugin extends AutoPlugin with JShellCompat {
 
   System.setProperty("sbt.supershell", "false")
 
-  override val projectSettings: Seq[Def.Setting[_]] = Def.settings(
+  override val projectSettings: Seq[Def.Setting[?]] = Def.settings(
     Seq(Compile, Test).flatMap { c =>
       Def.settings(
         jshellFullClasspath(c),
