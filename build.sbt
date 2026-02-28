@@ -8,14 +8,14 @@ name := "sbt-jshell"
 
 sbtPlugin := true
 
-crossScalaVersions += "3.8.1"
+crossScalaVersions += "2.12.21"
 
 pluginCrossBuild / sbtVersion := {
   scalaBinaryVersion.value match {
     case "2.12" =>
-      sbtVersion.value
+      "1.12.3"
     case _ =>
-      "2.0.0-RC9"
+      sbtVersion.value
   }
 }
 
@@ -36,7 +36,7 @@ val tagName = Def.setting {
 }
 
 val tagOrHash = Def.setting {
-  if (isSnapshot.value) sys.process.Process("git rev-parse HEAD").lineStream_!.head
+  if (isSnapshot.value) sys.process.Process("git rev-parse HEAD").lazyLines_!.head
   else tagName.value
 }
 
@@ -76,9 +76,9 @@ val updateReadme: State => State = { state =>
   val n = extracted get name
   val readme = "README.md"
   val readmeFile = file(readme)
-  val newReadme = Predef
-    .augmentString(IO.read(readmeFile))
-    .lines
+  val newReadme = IO
+    .read(readmeFile)
+    .linesIterator
     .map { line =>
       val matchReleaseOrSnapshot = line.contains("SNAPSHOT") == v.contains("SNAPSHOT")
       if (line.startsWith("addSbtPlugin") && matchReleaseOrSnapshot) {
