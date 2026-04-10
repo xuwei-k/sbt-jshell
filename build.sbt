@@ -1,5 +1,7 @@
 import sbtrelease.ReleaseStateTransformations._
 
+def sbt2 = "2.0.0-RC11"
+
 ThisBuild / onChangedBuildSource := ReloadOnSourceChanges
 
 organization := "com.github.xuwei-k"
@@ -8,14 +10,14 @@ name := "sbt-jshell"
 
 sbtPlugin := true
 
-crossScalaVersions += "3.8.2"
+crossScalaVersions += scala_version_from_sbt_version.ScalaVersionFromSbtVersion(sbt2)
 
 pluginCrossBuild / sbtVersion := {
   scalaBinaryVersion.value match {
     case "2.12" =>
       sbtVersion.value
     case _ =>
-      "2.0.0-RC11"
+      sbt2
   }
 }
 
