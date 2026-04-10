@@ -1,4 +1,4 @@
-# sbt jshell plugin
+# sbt [jshell](https://docs.oracle.com/en/java/javase/25/jshell/introduction-jshell.html) plugin
 
 [![scaladoc](https://javadoc.io/badge2/com.github.xuwei-k/sbt-jshell_sbt2_3/javadoc.svg)](https://javadoc.io/doc/com.github.xuwei-k/sbt-jshell_sbt2_3)
 
