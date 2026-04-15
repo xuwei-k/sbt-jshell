@@ -21,10 +21,6 @@ pluginCrossBuild / sbtVersion := {
   }
 }
 
-sbtPluginPublishLegacyMavenStyle := {
-  sys.env.isDefinedAt("GITHUB_ACTION") || isSnapshot.value
-}
-
 scalacOptions ++= Seq(
   "-deprecation",
   "-unchecked",
