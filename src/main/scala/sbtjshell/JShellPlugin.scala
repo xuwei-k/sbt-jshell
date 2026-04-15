@@ -24,7 +24,7 @@ object JShellPlugin extends AutoPlugin with JShellCompat {
   }
 
   def runJShell(args: Seq[String]): Int = {
-    findJShell().run(null, null, null, args: _*)
+    findJShell().run(null, null, null, args*)
   }
 
   System.setProperty("sbt.supershell", "false")
