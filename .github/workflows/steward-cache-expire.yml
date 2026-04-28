@@ -5,17 +5,12 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.repository_owner == 'xuwei-k' }}
     steps:
+    - uses: actions/checkout@v6
     - uses: actions/setup-node@v4
       with:
         node-version: 24
     - run: npm install @actions/cache
-    - uses: actions/github-script@v8
-      with:
-        script: |
-          const cache = require(`${process.env.GITHUB_WORKSPACE}/node_modules/@actions/cache`)
-          console.log(cache);
-          const res = await cache.restoreCache('foo', 'scala-steward', ['scala-steward']);
-          console.log(res);
+    - run: node .github/workflows/run.js
     - uses: actions/github-script@v8
       with:
         script: |
