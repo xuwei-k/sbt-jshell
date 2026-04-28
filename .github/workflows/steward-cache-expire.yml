@@ -8,7 +8,6 @@ jobs:
     - uses: actions/cache/restore@v5
       with:
         path: ./tmp
-        fail-on-cache-miss: true
         key: scala-steward-8572f6cf-1777363775340
         restore-keys: |
           Linux-sbt-1.12.8-1.1.6
