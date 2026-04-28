@@ -1,15 +1,11 @@
 on:
   push:
 jobs:
-  steward-cache-expire:
+  steward-cache-avoid-expire:
     runs-on: ubuntu-latest
-    if: ${{ github.repository_owner == 'xuwei-k' }}
     steps:
-    - run: echo "$HOME"
     - uses: actions/cache/restore@v5
       with:
-        path: |
-          /home/runner/scala-steward/workspace
+        path: /home/runner/scala-steward/workspace
         key: scala-steward-
-        restore-keys: |
-          scala-steward-
+        restore-keys: scala-steward-
