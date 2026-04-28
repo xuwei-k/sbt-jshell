@@ -9,3 +9,5 @@ jobs:
         path: /home/runner/scala-steward/workspace
         key: scala-steward-
         restore-keys: scala-steward-
+        fail-on-cache-miss: true
+        lookup-only: true
