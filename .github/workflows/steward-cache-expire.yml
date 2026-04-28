@@ -9,7 +9,7 @@ jobs:
     - uses: actions/cache/restore@v5
       with:
         path: |
-          /home/runner/work/scala-steward/workspace
+          /home/runner/scala-steward/workspace
         key: scala-steward-
         restore-keys: |
           scala-steward-
