@@ -12,7 +12,7 @@ jobs:
     - uses: actions/github-script@v8
       with:
         script: |
-          const cache = require(`${process.env.GITHUB_WORKSPACE}/node_modules/@actions/cache`)
+          const cache = require(`${process.env.GITHUB_WORKSPACE}/node_modules/@octokit/cache`)
           console.log(cache);
           const res = await cache.restoreCache('foo', 'scala-steward', ['scala-steward']);
           console.log(res);
