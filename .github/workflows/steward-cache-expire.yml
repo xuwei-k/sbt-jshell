@@ -12,8 +12,9 @@ jobs:
     - uses: actions/github-script@v8
       with:
         script: |
-          import * as cache from '@actions/cache'
-          const res = await restoreCache('foo', 'scala-steward', ['scala-steward']);
+          const cache = require(`${process.env.GITHUB_WORKSPACE}/node_modules/@actions/cache`)
+          console.log(cache);
+          const res = await cache.restoreCache('foo', 'scala-steward', ['scala-steward']);
           console.log(res);
     - uses: actions/github-script@v8
       with:
