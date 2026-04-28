@@ -11,5 +11,8 @@ jobs:
         fail-on-cache-miss: true
         key: scala-steward-8572f6cf-1777363775340
         restore-keys: |
+          Linux-sbt-1.12.8-1.1.6
+          sbt-ivy2-cache-test-
+          coursier-test-
           scala-steward-
           scala-steward-8572f6cf-1777363775340
