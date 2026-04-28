@@ -5,9 +5,9 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.repository_owner == 'xuwei-k' }}
     steps:
-      - uses: actions/github-script@v8
-        with:
-          script: |
+    - uses: actions/github-script@v8
+      with:
+        script: |
             const owner = context.repo.owner
             const repo = context.repo.repo
             const key = 'scala-steward-'
