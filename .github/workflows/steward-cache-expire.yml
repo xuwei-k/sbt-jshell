@@ -11,6 +11,7 @@ jobs:
         node-version: 24
     - run: npm install @actions/cache
     - run: node .github/workflows/run.js
+      if: false
     - uses: actions/github-script@v8
       with:
         script: |
@@ -24,7 +25,7 @@ jobs:
           const actionsCaches = await github.paginate(opts)
           console.log(`Number of caches: ${actionsCaches.length}`)
           console.log(actionsCaches)
-    - uses: actions/cache/restore@v5
+    - uses: actions/cache/restore@v4
       if: false
       with:
         path: ./tmp
