@@ -7,8 +7,9 @@ jobs:
     steps:
     - uses: actions/cache/restore@v5
       with:
-        path: tmp
+        path: ./tmp
         fail-on-cache-miss: true
-        key: scala-steward
+        key: scala-steward-8572f6cf-1777363775340
         restore-keys: |
           scala-steward-
+          scala-steward-8572f6cf-1777363775340
