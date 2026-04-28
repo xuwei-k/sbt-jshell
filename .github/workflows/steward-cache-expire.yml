@@ -5,7 +5,21 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.repository_owner == 'xuwei-k' }}
     steps:
+      - uses: actions/github-script@v8
+        with:
+          script: |
+            const owner = context.repo.owner
+            const repo = context.repo.repo
+            const key = 'scala-steward-'
+            const opts = await github.rest.actions.getActionsCacheList.endpoint.merge({
+              owner, repo, key,
+              sort: 'last_accessed_at',
+            })
+            const actionsCaches = await github.paginate(opts)
+            console.log(`Number of caches: ${actionsCaches.length}`)
+            console.log(actionsCaches)
     - uses: actions/cache/restore@v5
+      if: false
       with:
         path: ./tmp
         key: scala-steward-8572f6cf-1777363775340
