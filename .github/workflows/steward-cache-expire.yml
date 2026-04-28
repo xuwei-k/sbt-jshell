@@ -5,39 +5,9 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.repository_owner == 'xuwei-k' }}
     steps:
-    - uses: actions/checkout@v6
-      if: false
-    - uses: actions/setup-node@v4
-      if: false
-      with:
-        node-version: 24
-    - run: npm install @actions/cache
-      if: false
-    - run: node .github/workflows/run.js
-      if: false
-    - uses: actions/github-script@v8
-      if: false
-      with:
-        script: |
-          const owner = context.repo.owner
-          const repo = context.repo.repo
-          const key = 'scala-steward-'
-          const opts = await github.rest.actions.getActionsCacheList.endpoint.merge({
-            owner, repo, key,
-            sort: 'last_accessed_at',
-          })
-          const actionsCaches = await github.paginate(opts)
-          console.log(`Number of caches: ${actionsCaches.length}`)
-          console.log(actionsCaches)
     - uses: actions/cache/restore@v4
       with:
-        path: |
-          ~/.sbt
-          ~/.ivy2/cache
-        key: scala-steward-8572f6cf-1777363775340
+        path: scala-steward/workspace
+        key: scala-steward-
         restore-keys: |
-          Linux-sbt-1.12.8-1.1.6
-          sbt-ivy2-cache-test-
-          coursier-test-
           scala-steward-
-          scala-steward-8572f6cf-1777363775340
