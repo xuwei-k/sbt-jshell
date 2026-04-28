@@ -26,7 +26,6 @@ jobs:
           console.log(`Number of caches: ${actionsCaches.length}`)
           console.log(actionsCaches)
     - uses: actions/cache/restore@v4
-      if: false
       with:
         path: ./tmp
         key: scala-steward-8572f6cf-1777363775340
