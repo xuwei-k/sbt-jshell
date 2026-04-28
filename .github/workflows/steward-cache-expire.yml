@@ -9,4 +9,5 @@ jobs:
       with:
         path: tmp
         key: scala-steward
-        restore-keys: scala-steward
+        restore-keys: |
+          scala-steward-
