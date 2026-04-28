@@ -5,6 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.repository_owner == 'xuwei-k' }}
     steps:
+    - run: echo "$HOME"
     - uses: actions/cache/restore@v5
       with:
         path: |
