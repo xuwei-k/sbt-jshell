@@ -5,19 +5,29 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.repository_owner == 'xuwei-k' }}
     steps:
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 24
+    - run: npm install @octokit/action
     - uses: actions/github-script@v8
       with:
         script: |
-            const owner = context.repo.owner
-            const repo = context.repo.repo
-            const key = 'scala-steward-'
-            const opts = await github.rest.actions.getActionsCacheList.endpoint.merge({
-              owner, repo, key,
-              sort: 'last_accessed_at',
-            })
-            const actionsCaches = await github.paginate(opts)
-            console.log(`Number of caches: ${actionsCaches.length}`)
-            console.log(actionsCaches)
+          import * as cache from '@actions/cache'
+          const res = await restoreCache('foo', 'scala-steward', ['scala-steward']);
+          console.log(res);
+    - uses: actions/github-script@v8
+      with:
+        script: |
+          const owner = context.repo.owner
+          const repo = context.repo.repo
+          const key = 'scala-steward-'
+          const opts = await github.rest.actions.getActionsCacheList.endpoint.merge({
+            owner, repo, key,
+            sort: 'last_accessed_at',
+          })
+          const actionsCaches = await github.paginate(opts)
+          console.log(`Number of caches: ${actionsCaches.length}`)
+          console.log(actionsCaches)
     - uses: actions/cache/restore@v5
       if: false
       with:
