@@ -1,27 +1,14 @@
-name: scala-steward
 on:
   push:
-    branches: [ master ]
-  schedule:
-  - cron: '0 4 * * *'
 jobs:
-  scala-steward:
+  steward-cache-expire:
     runs-on: ubuntu-latest
     if: ${{ github.repository_owner == 'xuwei-k' }}
     steps:
-    - uses: actions/setup-java@v5
+    - uses: actions/cache/restore@v5
       with:
-        distribution: adopt
-        java-version: 11
-    - name: Generate token
-      id: generate_token
-      uses: actions/create-github-app-token@1b10c78c7865c340bc4f6099eb2f838309f1e8c3 # v3.1.1
-      with:
-        client-id: 89536
-        private-key: ${{ secrets.XUWEI_K_BOT_KEY }}
-    - name: Launch Scala Steward
-      uses: scala-steward-org/scala-steward-action@b186ab858ce163f9af7b016fac32cfb3f2c2f503 # v2.88.0
-      with:
-        github-token: ${{ steps.generate_token.outputs.token }}
-        author-email: "74788111+xuwei-k-bot[bot]@users.noreply.github.com"
-        author-name: xuwei-k-bot[bot]
+        path: tmp
+        fail-on-cache-miss: true
+        key: scala-steward
+        restore-keys: |
+          scala-steward-
