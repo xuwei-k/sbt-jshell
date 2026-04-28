@@ -6,13 +6,17 @@ jobs:
     if: ${{ github.repository_owner == 'xuwei-k' }}
     steps:
     - uses: actions/checkout@v6
+      if: false
     - uses: actions/setup-node@v4
+      if: false
       with:
         node-version: 24
     - run: npm install @actions/cache
+      if: false
     - run: node .github/workflows/run.js
       if: false
     - uses: actions/github-script@v8
+      if: false
       with:
         script: |
           const owner = context.repo.owner
@@ -27,7 +31,9 @@ jobs:
           console.log(actionsCaches)
     - uses: actions/cache/restore@v4
       with:
-        path: ./tmp
+        path: |
+          ~/.sbt
+          ~/.ivy2/cache
         key: scala-steward-8572f6cf-1777363775340
         restore-keys: |
           Linux-sbt-1.12.8-1.1.6

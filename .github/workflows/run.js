@@ -1,4 +1,4 @@
-import { restoreCache } from "@actions/cache";
+import * as cache from '@actions/cache';
 
-const res = await restoreCache(['foo'], 'scala-steward', ['scala-steward']);
+const res = await cache.restoreCache(['foo'], 'scala-steward', ['scala-steward']);
 console.log(res);
