@@ -5,9 +5,10 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.repository_owner == 'xuwei-k' }}
     steps:
-    - uses: actions/cache/restore@v4
+    - uses: actions/cache/restore@v5
       with:
-        path: scala-steward/workspace
+        path: |
+          sbt-jshell/sbt-jshell
         key: scala-steward-
         restore-keys: |
           scala-steward-
