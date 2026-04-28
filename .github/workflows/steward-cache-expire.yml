@@ -8,11 +8,11 @@ jobs:
     - uses: actions/setup-node@v4
       with:
         node-version: 24
-    - run: npm install @octokit/action
+    - run: npm install @actions/cache
     - uses: actions/github-script@v8
       with:
         script: |
-          const cache = require(`${process.env.GITHUB_WORKSPACE}/node_modules/@octokit/cache`)
+          const cache = require(`${process.env.GITHUB_WORKSPACE}/node_modules/@actions/cache`)
           console.log(cache);
           const res = await cache.restoreCache('foo', 'scala-steward', ['scala-steward']);
           console.log(res);
