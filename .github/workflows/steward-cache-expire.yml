@@ -1,0 +1,11 @@
+on:
+  push:
+jobs:
+  steward-cache-expire:
+    runs-on: ubuntu-latest
+    if: ${{ github.repository_owner == 'xuwei-k' }}
+    steps:
+    - uses: actions/cache/restore@v5
+      with:
+        path: tmp
+        key: scala-steward-
