@@ -1,6 +1,6 @@
 import sbtrelease.ReleaseStateTransformations._
 
-def sbt1 = "1.12.13"
+def sbt1 = "1.12.14"
 
 ThisBuild / onChangedBuildSource := ReloadOnSourceChanges
 
