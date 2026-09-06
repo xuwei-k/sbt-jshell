@@ -63,7 +63,7 @@ pomExtra := (
   </scm>
 )
 
-licenses := Seq("MIT" -> url("http://opensource.org/licenses/MIT"))
+licenses := Seq("MIT" -> uri("https://opensource.org/license/MIT"))
 
 releaseTagName := tagName.value
 
