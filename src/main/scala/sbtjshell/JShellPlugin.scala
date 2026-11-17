@@ -7,7 +7,7 @@ import sbt.{given, *}
 // format: on
 import sbt.Keys._
 import sbt.complete.DefaultParsers._
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 
 object JShellPlugin extends AutoPlugin with JShellCompat {
 

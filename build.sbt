@@ -10,14 +10,17 @@ name := "sbt-jshell"
 
 sbtPlugin := true
 
-crossScalaVersions += scala_version_from_sbt_version.ScalaVersionFromSbtVersion(sbt1)
+libraryDependencies += "org.scala-lang.modules" %% "scala-collection-compat" % "2.14.0"
+
+scalaVersion := "3.9.0"
+crossScalaVersions := Seq("3.9.0", "2.12.21")
 
 pluginCrossBuild / sbtVersion := {
   scalaBinaryVersion.value match {
     case "2.12" =>
       sbt1
     case _ =>
-      sbtVersion.value
+      "2.1.0"
   }
 }
 
@@ -118,3 +121,7 @@ releaseProcess := Seq[ReleaseStep](
 publishTo := (if (isSnapshot.value) None else localStaging.value)
 
 enablePlugins(JShellPlugin)
+
+scalacOptions ++= {
+  if (scalaBinaryVersion.value == "2.12") Seq("-Xsource:3", "-release:9") else Nil
+}
