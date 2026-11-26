@@ -2,6 +2,7 @@ Compile / unmanagedSourceDirectories += baseDirectory.value.getParentFile / "src
 Compile / unmanagedSourceDirectories += baseDirectory.value.getParentFile / "src" / "main" / "scala-3"
 
 scalacOptions ++= Seq(
+  "-Wconf:msg=it should not be used as infix operator:error",
   "-deprecation",
   "-unchecked",
   "-language:existentials",

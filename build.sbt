@@ -2,8 +2,6 @@ import sbtrelease.ReleaseStateTransformations._
 
 def sbt1 = "1.13.1"
 
-ThisBuild / onChangedBuildSource := ReloadOnSourceChanges
-
 organization := "com.github.xuwei-k"
 
 name := "sbt-jshell"
@@ -69,9 +67,9 @@ releaseTagName := tagName.value
 
 val updateReadme: State => State = { state =>
   val extracted = Project.extract(state)
-  val v = extracted get version
-  val org = extracted get organization
-  val n = extracted get name
+  val v = extracted.get(version)
+  val org = extracted.get(organization)
+  val n = extracted.get(name)
   val readme = "README.md"
   val readmeFile = file(readme)
   val newReadme = IO
@@ -85,7 +83,7 @@ val updateReadme: State => State = { state =>
     }
     .mkString("", "\n", "\n")
   IO.write(readmeFile, newReadme)
-  val git = new sbtrelease.Git(extracted get baseDirectory)
+  val git = new sbtrelease.Git(extracted.get(baseDirectory))
   git.add(readme) ! state.log
   git.commit(message = "update " + readme, sign = false, signOff = false) ! state.log
   sys.process.Process(Seq("git", "diff", "HEAD^")).!
